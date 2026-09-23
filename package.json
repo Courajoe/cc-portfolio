@@ -1,0 +1,43 @@
+{
+  "name": "cc-porfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "gen:land-mask": "node scripts/generate-land-mask.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.7.0",
+    "gray-matter": "^4.0.3",
+    "next": "16.3.6",
+    "next-mdx-remote": "^6.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "rehype-pretty-code": "^0.14.5",
+    "remark-gfm": "^4.0.1",
+    "shiki": "^4.4.3",
+    "simple-icons": "^16.32.0",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "tailwindcss": "^4",
+    "topojson-client": "^3.1.0",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
+  },
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "CoderCourajoe",
+  "handle": "@CoderCourajoe",
+  "tagline": "Building real products with AI, on camera",
+  "role": "Developer & YouTuber",
+  "shortBio": "I build real, shipped products with AI coding tools like Claude Code and Codex, and I film the whole process on YouTube: the prompts, the bugs, and the deploys.",
+  "longBio": "I'm a full-stack developer who teaches by building. Every video starts from an empty folder and ends with something live on the internet. Along the way I show how I pair with AI agents, where they save hours, where they need a firm hand, and how to ship on a modern stack (Next.js, Postgres, Docker) to a VPS you actually control. No toy demos, no slides: just real products, built on camera.",
+  "email": "hello@codercourajoe.com",
+  "location": "Remote · Earth",
+  "profileImage": "/profile.svg",
+  "formspreeId": "",
+  "socials": [
+    { "label": "YouTube", "icon": "youtube", "url": "https://www.youtube.com/@CoderCourajoe" },
+    { "label": "GitHub", "icon": "github", "url": "https://github.com/Courajoe" },
+    { "label": "X / Twitter", "icon": "x", "url": "https://x.com/codercourajoe" }
+  ]
+}

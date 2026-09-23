@@ -1,0 +1,48 @@
+---
+title: "ShipLog: Changelog SaaS in a Weekend"
+description: "A multi-tenant changelog and release-notes app built almost entirely by pairing with Claude Code, from an empty folder to a paid-ready deploy on a Contabo VPS."
+date: "2026-07-02"
+tags: ["Next.js", "Prisma", "PostgreSQL", "Docker", "Dokploy"]
+thumbnail: "/projects/shiplog.svg"
+featured: false
+---
+
+## The challenge
+
+Build a real SaaS over one weekend on camera, with auth, multi-tenancy, a public changelog page per workspace and an RSS feed. The AI does the typing and I do the product decisions and the code review.
+
+## Stack
+
+- **Next.js** App Router with Server Actions for mutations
+- **Prisma** + **PostgreSQL** for workspaces, posts and members
+- **Dokploy** on a **Contabo VPS** for deploys, with a managed Postgres alongside
+
+## The schema that carried the whole app
+
+```prisma title="prisma/schema.prisma"
+model Workspace {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  posts     Post[]
+  members   Member[]
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  workspaceId String
+  title       String
+  body        String
+  publishedAt DateTime?
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@index([workspaceId, publishedAt])
+}
+```
+
+## What I learned
+
+1. **Spend the first hour on the schema.** Once the data model was right, the agent had a lot less room to go wrong.
+2. **Ask for small diffs.** "Add the RSS route" gets reviewed properly. "Finish the app" doesn't.
+3. **Deploy on day one.** Shipping a blank page to Dokploy early meant the final deploy was a non-event.

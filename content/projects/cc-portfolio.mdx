@@ -1,0 +1,64 @@
+---
+title: "This Portfolio: Next.js 16 + Three.js"
+description: "A fully static developer portfolio with MDX write-ups, a terminal-style hero and a WebGL globe that spins as you scroll, deployed to Dokploy with zero Docker config."
+date: "2026-09-23"
+tags: ["Next.js", "TypeScript", "Tailwind", "Three.js", "MDX", "Dokploy"]
+thumbnail: "/projects/cc-portfolio.svg"
+repoUrl: "https://github.com/Courajoe/cc-portfolio"
+featured: true
+---
+
+## Why build it this way?
+
+A portfolio is the simplest real product you can ship, which makes it a good way to learn the full loop: **content → static build → deploy**. Everything here is statically generated, and the only thing that runs in production is `next start` serving pre-rendered HTML.
+
+- **No database.** Projects are `.mdx` files, and the bio and stacks are JSON under `content/`.
+- **No Dockerfile.** Nixpacks detects a standard Next.js app from `package.json`.
+- **One client-heavy piece.** The Three.js background is lazy-loaded and never server-rendered.
+
+## Content as files
+
+Every project page comes from one file in `content/projects/`. The frontmatter drives the cards, and the body is rendered as MDX with syntax highlighting done at build time:
+
+```ts title="lib/content.ts"
+export function getAllProjects(): Project[] {
+  return fs
+    .readdirSync(PROJECTS_DIR)
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => readProject(file.replace(/\.mdx$/, "")))
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+}
+```
+
+Then `generateStaticParams` turns that list into one static page per project:
+
+```tsx title="app/projects/[slug]/page.tsx"
+export function generateStaticParams() {
+  return getAllProjects().map(({ slug }) => ({ slug }));
+}
+
+// Anything not returned above is a 404, not an on-demand render.
+export const dynamicParams = false;
+```
+
+## The scroll-driven globe
+
+The Earth behind the hero is about 18,000 dots on a sphere. A dot is kept only where a tiny land mask says there's land. That mask is a 1°×1° bitmap baked from public-domain Natural Earth data by `scripts/generate-land-mask.mjs`, so the browser downloads no textures or map data.
+
+Scrolling doesn't set the rotation directly. It sets a *target* angle, and the globe eases toward it every frame, which gives the spin a bit of weight and inertia:
+
+```tsx {5}
+useFrame((state, delta) => {
+  const target = startAngle + window.scrollY * RADIANS_PER_PX;
+  // Cover 6% of the remaining angle per frame (scaled for 120Hz screens).
+  const ease = 1 - Math.pow(1 - 0.06, delta * 60);
+  angle.current += (target - angle.current) * ease;
+  spin.current.rotation.y = angle.current;
+});
+```
+
+It sits in a `position: fixed` layer with `pointer-events: none`, so it can never block a click or a scroll. It isn't mounted at all when the visitor prefers reduced motion.
+
+## Deploying
+
+Push to GitHub, point Dokploy at the repo, and pick **Nixpacks** as the build type. Nixpacks runs `pnpm install`, `pnpm build` and `pnpm start`, with no extra config. The full walkthrough is in the README.

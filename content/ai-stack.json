@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Claude Code",
+    "category": "Agentic CLI",
+    "icon": "claude",
+    "description": "An agentic coding assistant that lives in my terminal and works across the whole repo.",
+    "usage": "My main pair programmer. It scaffolds features, refactors across files and runs the build until it passes."
+  },
+  {
+    "name": "Codex",
+    "category": "Agentic CLI",
+    "icon": "codex",
+    "description": "OpenAI's coding agent, for running parallel tasks and getting a second opinion.",
+    "usage": "I hand it isolated, well-scoped tasks and compare its approach against Claude's on camera."
+  },
+  {
+    "name": "MCP",
+    "category": "Protocol",
+    "icon": "modelcontextprotocol",
+    "description": "The Model Context Protocol, an open standard for plugging tools and data into AI agents.",
+    "usage": "I wire agents into real systems like databases, browsers and docs so they can check their own work."
+  },
+  {
+    "name": "Claude API",
+    "category": "Platform",
+    "icon": "anthropic",
+    "description": "Direct API access to Claude models for building AI features into products.",
+    "usage": "I use it when the product itself needs AI, for things like summarisers, agents and structured extraction."
+  }
+]

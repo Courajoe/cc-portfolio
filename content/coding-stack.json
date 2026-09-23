@@ -1,0 +1,12 @@
+[
+  { "name": "Next.js", "category": "Frontend", "icon": "nextdotjs", "level": "daily" },
+  { "name": "Tailwind CSS", "category": "Frontend", "icon": "tailwindcss", "level": "daily" },
+  { "name": "Node.js / TypeScript", "category": "Backend", "icon": "typescript", "level": "daily" },
+  { "name": "PHP (MVC / OOP)", "category": "Backend", "icon": "php", "level": "production" },
+  { "name": "PostgreSQL", "category": "Backend", "icon": "postgresql", "level": "daily" },
+  { "name": "MySQL", "category": "Backend", "icon": "mysql", "level": "production" },
+  { "name": "Prisma", "category": "Backend", "icon": "prisma", "level": "daily" },
+  { "name": "Docker", "category": "Infra", "icon": "docker", "level": "production" },
+  { "name": "Contabo VPS", "category": "Infra", "icon": "contabo", "level": "production" },
+  { "name": "Dokploy", "category": "Infra", "icon": "dokploy", "level": "daily" }
+]

@@ -1,0 +1,42 @@
+---
+title: "MCP Postgres Inspector"
+description: "A tiny read-only MCP server that lets Claude Code look at a live Postgres schema and sample rows, so it writes migrations against reality instead of guessing."
+date: "2026-08-14"
+tags: ["MCP", "TypeScript", "PostgreSQL", "Claude Code"]
+thumbnail: "/projects/mcp-postgres-inspector.svg"
+featured: true
+---
+
+## The problem
+
+AI agents are great at writing SQL and bad at knowing what your database *actually* looks like. Half the "hallucinated column" bugs I hit on stream came from the agent guessing at the schema.
+
+## The fix: give the agent eyes
+
+The [Model Context Protocol](https://modelcontextprotocol.io) lets you expose tools to an agent. This server exposes exactly two, both read-only:
+
+| Tool            | What it returns                                 |
+| --------------- | ----------------------------------------------- |
+| `list_tables`   | Every table with its columns, types and indexes |
+| `sample_rows`   | Up to 5 rows from a table (PII columns masked)  |
+
+```ts title="src/server.ts"
+server.tool(
+  "sample_rows",
+  { table: z.string(), limit: z.number().max(5).default(5) },
+  async ({ table, limit }) => {
+    // Whitelist the identifier. Never interpolate raw agent input.
+    assertKnownTable(table);
+    const rows = await sql`SELECT * FROM ${sql(table)} LIMIT ${limit}`;
+    return { content: [{ type: "text", text: JSON.stringify(mask(rows)) }] };
+  },
+);
+```
+
+## Guardrails
+
+- It connects with a **read-only Postgres role**, so even a bad prompt can't `DROP` anything.
+- Table names are checked against the introspected schema before any query runs.
+- Output is truncated so a wide table can't flood the agent's context.
+
+> The agent got noticeably better at writing migrations as soon as it could check the schema itself.
