@@ -1,4 +1,7 @@
-
+FROM node:22-slim AS base
+# Install the pnpm version pinned in package.json directly, bypassing corepack.
+RUN npm install -g pnpm@12.5.1
+WORKDIR /app
 
 FROM base AS deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
