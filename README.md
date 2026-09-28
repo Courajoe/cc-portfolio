@@ -1,3 +1,5 @@
+jest testing pull request
+
 # CoderCourajoe: portfolio & channel landing page
 
 A fully static developer portfolio built with **Next.js 16 (App Router)**, **Tailwind CSS v4**, **MDX** and **react-three-fiber**, deployed to a VPS with **Dokploy + Nixpacks**. There's no database, no Dockerfile and no custom build config.
