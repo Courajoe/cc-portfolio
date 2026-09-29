@@ -1,3 +1,4 @@
+THIS IS BROKEN
 FROM node:22-slim AS base
 # Install the pnpm version pinned in package.json directly, bypassing corepack.
 RUN npm install -g pnpm@12.5.1
